@@ -23,7 +23,7 @@ body {
 }
 
 * {
-  transition: background 0.5s ease, color 0.5s ease, box-shadow 0.5s ease, border-radius 0.5s ease;
+  transition: background 1.5s ease, color 0.5s ease, box-shadow 0.5s ease, border-radius 0.5s ease;
 }
 
 button {
