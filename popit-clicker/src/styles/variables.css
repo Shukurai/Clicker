@@ -1,0 +1,55 @@
+/* RETRO — default, до покупки UI unlock */
+:root,
+:root[data-theme="retro"] {
+    /* surface */
+    --bg: #c0c0c0;
+    --shadow-dark: #808080;
+    --shadow-light: #ffffff;
+    --bubble-fill: #d4d0c8;
+
+    /* text */
+    --text: #000000;
+    --text-soft: #404040;
+
+    /* accents */
+    --accent: #000080;
+    --accent-deep: #000040;
+    --positive: #008000;
+
+    /* shape */
+    --radius-sm: 0;
+    --radius-md: 0;
+    --radius-lg: 0;
+
+    /* font */
+    --font-body: "Tahoma", "MS Sans Serif", sans-serif;
+
+    --shadow-up: 2px 2px 0 var(--shadow-dark), -2px -2px 0 var(--shadow-light);
+    --shadow-in: inset 2px 2px 0 var(--shadow-dark), inset -2px -2px 0 var(--shadow-light);
+    --shadow-up-soft: 1px 1px 0 var(--shadow-dark);
+}
+
+/* MODERN — после покупки UI unlock */
+:root[data-theme="modern"] {
+    --bg: #e0e5ec;
+    --shadow-dark: #a3b1c6;
+    --shadow-light: #ffffff;
+    --bubble-fill: #e6ebf2;
+
+    --text: #3d4759;
+    --text-soft: #6b7689;
+
+    --accent: #5b8def;
+    --accent-deep: #3a6dd6;
+    --positive: #4a9b7f;
+
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+
+    --font-body: "Nunito", system-ui, sans-serif;
+
+    --shadow-up: 9px 9px 18px var(--shadow-dark), -9px -9px 18px var(--shadow-light);
+    --shadow-in: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
+    --shadow-up-soft: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+}
