@@ -9,6 +9,7 @@ import { fmt } from "./utils/format";
 import { useEffect } from "react";
 import { Tooltip } from "./components/Tooltip/Tooltip";
 import { tierOf } from "./utils/upgrade";
+import { CreatureTicker } from "./components/CreatureTicker/CreatureTicker";
 import "./App.css";
 
 function App() {
@@ -84,6 +85,7 @@ function App() {
               <StatCard label="Clicks" value={clicks.toLocaleString("en-US")} />
             </div>
           )}
+          <CreatureTicker levels={levels} />
         </section>
 
         <Shop
@@ -95,6 +97,9 @@ function App() {
           onUnlock={unlocks.buy}
         />
       </main>
+
+      
+        
     </div>
   );
 }

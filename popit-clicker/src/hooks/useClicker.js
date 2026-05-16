@@ -62,6 +62,7 @@ export function useClicker() {
             .reduce((s, u) => s + effectiveValue(u, levels[u.id]) * levels[u.id], 0),
         [levels]
     );
+    
     useEffect(() => {
         if (autoIncome <= 0) return;
         const id = setInterval(() => {

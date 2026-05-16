@@ -91,7 +91,7 @@
     position: absolute;
     font-weight: 900;
     font-size: 30px;
-    animation: bubble-float-up 0.1s ease;
+    animation: bubble-float-up 0.4s ease;
 }
 
 [data-theme="modern"] .bubble-float{
