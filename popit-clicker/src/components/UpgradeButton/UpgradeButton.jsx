@@ -7,11 +7,13 @@ import {
     tierMultiplier,
     levelsToNextTier,
     TIER_MULTIPLIER,
+    effectiveValue,
 } from "../../utils/upgrade";
+
 import "./UpgradeButton.css";
 
-export function UpgradeButton({ upgrade, level, coins, onBuy }) {
-    const cost = costOf(upgrade, level, COST_MULTIPLIER);
+export function UpgradeButton({ upgrade, level, coins, onBuy, features = {} }) {
+        const cost = costOf(upgrade, level, COST_MULTIPLIER);
     const canBuy = coins >= cost;
 
     const tier = tierOf(level);
@@ -19,11 +21,18 @@ export function UpgradeButton({ upgrade, level, coins, onBuy }) {
     const toNext = levelsToNextTier(level);
     const nextMult = mult * TIER_MULTIPLIER;
 
+    const perLevelRaw = effectiveValue(upgrade, level);
+    const isClickType = upgrade.type === "click";
+    const multiplier = (isClickType && features.doubleClick) || (!isClickType && features.doubleAuto) ? 2 : 1;
+    const perLevel = perLevelRaw * multiplier;
+    const unit = isClickType ? "per click" : "/ sec";
+    const effectDesc = `+${fmt(perLevel)} ${unit}`;
+
     const tooltipContent = (
         <div>
             <div style={{ fontWeight: 800, marginBottom: 4 }}>{upgrade.name}</div>
             <div style={{ opacity: 0.85, marginBottom: 6 }}>
-                Each level: +{upgrade.value} {upgrade.type === "click" ? "per click" : "/ sec"}
+                Each level: {effectDesc}
             </div>
             {tier > 0 && (
                 <div style={{ color: "#9ec5ff" }}>
@@ -53,7 +62,7 @@ export function UpgradeButton({ upgrade, level, coins, onBuy }) {
                                 {tier > 0 && <span className="upgrade-btn-mult">×{mult}</span>}
                             </span>
                         </div>
-                        <div className="upgrade-btn-desc">{upgrade.description}</div>
+                        <div className="upgrade-btn-desc">{effectDesc}</div>
                         {level > 0 && (
                             <div className="upgrade-btn-milestone">
                                 ×{nextMult} in {toNext} {toNext === 1 ? "level" : "levels"}

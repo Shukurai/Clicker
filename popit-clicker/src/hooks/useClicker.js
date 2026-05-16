@@ -7,7 +7,7 @@ const initialLevels = () =>
 
 const STORAGE_KEY = "popit-clicker:v1";
 
-export function useClicker() {
+export function useClicker(features = {}) {
     const [save, setSave] = usePersistentState(STORAGE_KEY, {
         coins: 0,
         total: 0,
@@ -50,19 +50,27 @@ export function useClicker() {
     const floatId = useRef(0);
 
     const clickPower = useMemo(
-        () => 1 + UPGRADES
-            .filter(u => u.type === "click")
-            .reduce((s, u) => s + effectiveValue(u, levels[u.id]) * levels[u.id], 0),
-        [levels]
+        () => {
+            const base = 1 + UPGRADES
+                .filter(u => u.type === "click")
+                .reduce((s, u) => s + effectiveValue(u, levels[u.id]) * levels[u.id], 0);
+
+            return features.doubleClick ? base * 2 : base;
+        },
+        [levels, features.doubleClick]
     );
 
     const autoIncome = useMemo(
-        () => UPGRADES
-            .filter(u => u.type === "auto")
-            .reduce((s, u) => s + effectiveValue(u, levels[u.id]) * levels[u.id], 0),
-        [levels]
+        () => {
+            const base = UPGRADES
+                .filter(u => u.type === "auto")
+                .reduce((s, u) => s + effectiveValue(u, levels[u.id]) * levels[u.id], 0);
+
+            return features.doubleAuto ? base * 2 : base;
+        },
+        [levels, features.doubleAuto]
     );
-    
+
     useEffect(() => {
         if (autoIncome <= 0) return;
         const id = setInterval(() => {

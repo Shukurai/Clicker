@@ -6,12 +6,13 @@ import "./Shop.css";
 
 export function Shop({
     levels, coins, total, onBuy,
-    unlocks, onUnlock,
+    unlocks, onUnlock, features
 }) {
     const visibleUpgrades = UPGRADES.filter(u => total >= u.baseCost * 0.5);
-    const visibleUnlocks = UNLOCKS.filter(
-        u => !unlocks.isOwned(u.id) && (!u.requires || unlocks.isOwned(u.requires))
-    );
+    const visibleUnlocks = UNLOCKS
+        .filter(u => !unlocks.isOwned(u.id) && (!u.requires || unlocks.isOwned(u.requires)))
+        .sort((a, b) => a.cost - b.cost)
+        .slice(0, 3);
 
     return (
         <aside className="shop">
@@ -40,6 +41,7 @@ export function Shop({
                         level={levels[upgrade.id]}
                         coins={coins}
                         onBuy={onBuy}
+                        features={features} 
                     />
                 ))}
             </div>
