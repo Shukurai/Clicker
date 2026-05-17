@@ -2,12 +2,15 @@ import { UPGRADES } from "../../data/upgrades";
 import { UpgradeButton } from "../UpgradeButton/UpgradeButton";
 import { UNLOCKS } from "../../data/unlocks";
 import { UnlockButton } from "../UnlockButton/UnlockButton";
+import { useState } from "react";
 import "./Shop.css";
 
 export function Shop({
     levels, coins, total, onBuy,
     unlocks, onUnlock, features
-}) {
+}) 
+{
+    const [buyMode, setBuyMode] = useState("1");
     const visibleUpgrades = UPGRADES.filter(u => total >= u.baseCost * 0.5);
     const visibleUnlocks = UNLOCKS
         .filter(u => !unlocks.isOwned(u.id) && (!u.requires || unlocks.isOwned(u.requires)))
@@ -32,7 +35,23 @@ export function Shop({
                 </>
             )}
 
-            <h2 className="shop-title shop-title-secondary">Upgrades</h2>
+            <div className="Upgrade-contaier">
+                <h2 className="shop-title shop-title-secondary">Upgrades</h2>
+                <div className="shop-buy-mode">
+                    <span className="shop-buy-mode-label">Buy:</span>
+                    {["1", "10", "max"].map(mode => (
+                        <button
+                            key={mode}
+                            className={`shop-buy-mode-btn ${buyMode === mode ? "is-active" : ""}`}
+                            onClick={() => setBuyMode(mode)}
+                        >
+                            ×{mode}
+                        </button>
+                    ))}
+                </div>
+            </div>
+            
+            
             <div className="shop-list">
                 {visibleUpgrades.map(upgrade => (
                     <UpgradeButton
@@ -41,7 +60,8 @@ export function Shop({
                         level={levels[upgrade.id]}
                         coins={coins}
                         onBuy={onBuy}
-                        features={features} 
+                        features={features}
+                        buyMode={buyMode}
                     />
                 ))}
             </div>

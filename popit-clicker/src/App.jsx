@@ -31,19 +31,15 @@ function App() {
   //Buy UIFIAT
   useEffect(() => {
     let theme = "retro";
-    if (unlocks.features.uiNeo) theme = "modern";
+    if (unlocks.features.UI) theme = "modern";
     else if (unlocks.features.uiFlat) theme = "transition";
     document.documentElement.dataset.theme = theme;
-  }, [unlocks.features.uiFlat, unlocks.features.uiNeo]);
+  }, [unlocks.features.uiFlat, unlocks.features.uiNeo, features.UI]);
 
   // Sync features into local state for useClicker
   useEffect(() => {
     setFeatures(unlocks.features);
   }, [unlocks.features]);
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = features.UI ? "modern" : "retro";
-  }, [features.UI]);
 
   const { playPop, playBuy, playMilestone, enabled: soundOn, setEnabled: setSoundOn } = useSound();
 
@@ -52,10 +48,10 @@ function App() {
     if (features.clickSound) playPop();
   };
 
-  const handleBuy = (id) => {
+  const handleBuy = (id, count = 1) => {
     const oldLevel = levels[id];
-    if (!buy(id)) return;
-    const newLevel = oldLevel + 1;
+    if (!buy(id, count)) return;
+    const newLevel = oldLevel + count;
 
     if (features.milestoneSound && tierOf(newLevel) > tierOf(oldLevel)) {
       playMilestone();
@@ -71,7 +67,7 @@ function App() {
     }
   };
   useEffect(() => {
-    if (!import.meta.env.DEV) return;
+    //if (!import.meta.env.DEV) return;
 
     window.cheat = {
       coins: (n) => {

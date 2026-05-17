@@ -93,8 +93,8 @@ export const UNLOCKS = [
         id: "FINALE?!",
         name: "Finale",
         description: "It could be the final upgrade",
-        cost: 1000_00_000,
-        icon: "🏁",
+        cost: 1_000_000_000,
+        icon: "🏁", 
         feature: "final",
     },
 ];

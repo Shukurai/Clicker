@@ -95,18 +95,28 @@ export function useClicker(features = {}) {
        
     }, [clickPower]);
 
-    const buy = useCallback((upgradeId) => {
+    const buy = useCallback((upgradeId, count = 1) => {
         const upgrade = UPGRADES.find(u => u.id === upgradeId);
         if (!upgrade) return false;
 
-        const level = levels[upgradeId];
-        const cost = Math.ceil(upgrade.baseCost * Math.pow(COST_MULTIPLIER, level));
-        if (coins < cost) return false;
+        const currentLevel = levels[upgradeId];
+        let totalCost = 0;
+        let bought = 0;
+
+        //how many afford
+        for (let i = 0; i < count; i++) {
+            const nextCost = Math.ceil(upgrade.baseCost * Math.pow(COST_MULTIPLIER, currentLevel + i));
+            if (coins < totalCost + nextCost) break;
+            totalCost += nextCost;
+            bought += 1;
+        }
+
+        if (bought === 0) return false;
 
         setSave(s => ({
             ...s,
-            coins: s.coins - cost,
-            levels: { ...s.levels, [upgradeId]: s.levels[upgradeId] + 1 },
+            coins: s.coins - totalCost,
+            levels: { ...s.levels, [upgradeId]: s.levels[upgradeId] + bought },
         }));
         return true;
     }, [coins, levels, setSave]);
@@ -125,6 +135,9 @@ export function useClicker(features = {}) {
         setCoins(c => c - amount);
         return true;
     }, [coins]);
+
+
+    
 
     return {
         coins, total, clicks, levels, floats,

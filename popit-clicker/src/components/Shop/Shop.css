@@ -17,3 +17,41 @@
     margin-top: 20px;
 }
 
+.shop-buy-mode {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 0 4px;
+}
+
+.shop-buy-mode-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--text-soft);
+}
+
+.shop-buy-mode-btn {
+    flex: 1;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-soft);
+    box-shadow: var(--shadow-up-soft);
+    transition: all 0.15s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.shop-buy-mode-btn:hover {
+    color: var(--text);
+}
+
+.shop-buy-mode-btn.is-active {
+    box-shadow: var(--shadow-in);
+    color: var(--accent);
+}
